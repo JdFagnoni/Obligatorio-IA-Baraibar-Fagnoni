@@ -1,48 +1,61 @@
+# ---------------------------
 # Entornos virtuales
+# ---------------------------
 .venv/
 venv/
 ENV/
 env/
 
-# Python
+# ---------------------------
+# Cache y compilados de Python
+# ---------------------------
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
 
-# Jupyter Notebook
+# ---------------------------
+# Jupyter Notebook checkpoints
+# ---------------------------
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# Modelos y datos entrenados
+# ---------------------------
+# Modelos y datos pesados
+# ---------------------------
 *.pkl
 *.pickle
 *.h5
 *.pth
 
+# ---------------------------
 # Logs y resultados temporales
+# ---------------------------
 *.log
 logs/
 results/
 experiments/
 
-# IDEs
+# ---------------------------
+# Configuración IDEs
+# ---------------------------
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# Sistema operativo
+# ---------------------------
+# Archivos del sistema
+# ---------------------------
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Poetry
-poetry.lock
-
-# Archivos de prueba temporales
+# ---------------------------
+# Archivos temporales / scratch
+# ---------------------------
 test_*.py
 scratch/
 temp/
