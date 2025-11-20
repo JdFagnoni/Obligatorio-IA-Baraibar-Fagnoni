@@ -1,0 +1,48 @@
+# Entornos virtuales
+.venv/
+venv/
+ENV/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Modelos y datos entrenados
+*.pkl
+*.pickle
+*.h5
+*.pth
+
+# Logs y resultados temporales
+*.log
+logs/
+results/
+experiments/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Poetry
+poetry.lock
+
+# Archivos de prueba temporales
+test_*.py
+scratch/
+temp/
