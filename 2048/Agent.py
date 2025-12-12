@@ -2,11 +2,11 @@ from abc import ABC, abstractmethod
 from GameBoard import GameBoard
 import numpy as np
 
-# MOVES
-# LEFT = 0
-# UP = 1
-# RIGHT = 2
-# DOWN = 3
+# MOVES (seguir convención de GameBoard.dirs)
+# UP = 0
+# DOWN = 1
+# LEFT = 2
+# RIGHT = 3
 
 # Posibility of adding a 2 tile 90%
 # Posibility of adding a 4 tile 10%
