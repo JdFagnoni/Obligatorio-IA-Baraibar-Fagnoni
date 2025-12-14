@@ -76,8 +76,8 @@ def merges_possible(board_or_grid) -> int:
         for j in range(4):
             if j + 1 < 4 and grid[i, j] == grid[i, j + 1] and grid[i, j] != 0:
                 count += 1
-        if i + 1 < 4 and grid[i, j] == grid[i + 1, j] and grid[i, j] != 0:
-            count += 1
+            if i + 1 < 4 and grid[i, j] == grid[i + 1, j] and grid[i, j] != 0:
+                count += 1
     return count
 
 

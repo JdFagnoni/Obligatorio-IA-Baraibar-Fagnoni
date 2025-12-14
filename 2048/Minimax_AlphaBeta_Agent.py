@@ -1,4 +1,5 @@
 import math
+
 from Agent import Agent
 from GameBoard import GameBoard
 from heuristics import evaluate
@@ -21,14 +22,14 @@ class MinimaxAlphaBetaAgent(Agent):
         return evaluate(board, weights=self.weights)
 
     def _min_value(self, board: GameBoard, depth: int, alpha: float, beta: float) -> float:
-        cells = board.get_available_cells()
+        cells = self.safe_get_available_cells(board)
         if not cells or depth == 0:
             return self.heuristic_utility(board)
 
         value = math.inf
         for cell in cells:
             for tile in (2, 4):
-                clone = board.clone()
+                clone = self.safe_clone(board)
                 clone.insert_tile(cell, tile)
                 value = min(value, self._max_value(clone, depth - 1, alpha, beta))
                 if self.use_pruning:
@@ -38,13 +39,13 @@ class MinimaxAlphaBetaAgent(Agent):
         return value
 
     def _max_value(self, board: GameBoard, depth: int, alpha: float, beta: float) -> float:
-        moves = board.get_available_moves()
+        moves = self.safe_get_available_moves(board)
         if depth == 0 or not moves:
             return self.heuristic_utility(board)
 
         value = -math.inf
         for move in moves:
-            clone = board.clone()
+            clone = self.safe_clone(board)
             clone.move(move)
             value = max(value, self._min_value(clone, depth - 1, alpha, beta))
             if self.use_pruning:
@@ -54,7 +55,7 @@ class MinimaxAlphaBetaAgent(Agent):
         return value
 
     def play(self, board: GameBoard) -> int:
-        moves = board.get_available_moves()
+        moves = self.safe_get_available_moves(board)
         if not moves:
             return 0
 
@@ -63,7 +64,7 @@ class MinimaxAlphaBetaAgent(Agent):
         alpha, beta = -math.inf, math.inf
 
         for move in moves:
-            clone = board.clone()
+            clone = self.safe_clone(board)
             clone.move(move)
             val = self._min_value(clone, self.depth - 1, alpha, beta)
             if val > best_value:

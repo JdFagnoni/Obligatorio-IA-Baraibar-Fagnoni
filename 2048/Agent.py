@@ -1,39 +1,55 @@
+from __future__ import annotations
+
+import contextlib
 from abc import ABC, abstractmethod
-from GameBoard import GameBoard
+
 import numpy as np
 
-# MOVES (seguir convención de GameBoard.dirs)
-# UP = 0
-# DOWN = 1
-# LEFT = 2
-# RIGHT = 3
+from GameBoard import GameBoard
 
-# Posibility of adding a 2 tile 90%
-# Posibility of adding a 4 tile 10%
+
+@contextlib.contextmanager
+def preserve_numpy_rng():
+    """Preserva el estado de np.random dentro de un bloque.
+
+    Justificación:
+    El template de GameBoard consume aleatoriedad (np.random) en operaciones que
+    los agentes llaman durante la búsqueda, principalmente clone() y
+    get_available_moves() (que clona internamente).
+
+    Si no preservamos el RNG, el "thinking" del agente puede adelantar la
+    secuencia aleatoria del juego y afectar qué tiles aparecen luego.
+    Este wrapper evita esa contaminación SIN tocar GameBoard.py.
+    """
+
+    state = np.random.get_state()
+    try:
+        yield
+    finally:
+        np.random.set_state(state)
 
 
 class Agent(ABC):
+    """Interfaz común de agentes."""
 
     @abstractmethod
-    def play(self, board: GameBoard)->int:
-        # Si sienten que necesitan cambiar la firma se puede cambiar, asegurence de cambiarla en el main
-        return 0
+    def play(self, board: GameBoard) -> int:
+        """Devuelve la acción (0..3) a ejecutar en el board."""
 
     @abstractmethod
-    def heuristic_utility(self, board: GameBoard)->int:
-        """
-        Algunas heurisitcas posibles son:\n
-            - Calcular el \"smoothness\" del tablero. Esto es porque cuanto mas \"smooth\" el tablero, mas facil es juntar fichas. Para ello debemos:
-                - Aplicar la raiz cuadrada al tablero
-                - Sumar la diferencia entre cada casilla y la de abajo
-                - Sumar la diferencia entre cada casilla y la de la derecha
-                - Elevar este resultado a un smoothness_weight a determinar
-                - Multiplicar por -1
-            - Calcular el valor del tablero. Esto es porque cuanto mas fichas grandes tengo, mas cerca de ganar estoy. Para ello debemos:
-                - Elevar el tablero al cuadrado
-                - Sumar todos los valores que se encuentran en el tablero
-            - Calcular la cantidad de espacios vacios. Esto es porque cuanto mas espacios vacios tengo, menos chance de tener un mal estado. Para ello debemos:
-                - Obtener la cantidad de celdas vacias
-                - Multiplicar por un empty_weight (recomendable en el orden de las decenas de miles)
-        """
-        pass
+    def heuristic_utility(self, board: GameBoard) -> float:
+        """Evalúa un estado del tablero. Mayor = mejor para el jugador."""
+
+    def safe_get_available_moves(self, board: GameBoard) -> list[int]:
+        """Wrapper para evitar consumir RNG en get_available_moves()."""
+        with preserve_numpy_rng():
+            return board.get_available_moves()
+
+    def safe_get_available_cells(self, board: GameBoard) -> list[tuple[int, int]]:
+        """Wrapper simétrico; get_available_cells() no usa RNG."""
+        return board.get_available_cells()
+
+    def safe_clone(self, board: GameBoard) -> GameBoard:
+        """Wrapper para evitar consumir RNG en clone()."""
+        with preserve_numpy_rng():
+            return board.clone()

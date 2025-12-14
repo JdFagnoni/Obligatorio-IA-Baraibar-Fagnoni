@@ -1,14 +1,18 @@
+import numpy as np
+
 from Agent import Agent
 from GameBoard import GameBoard
-import numpy as np
 
 
 class RandomAgent(Agent):
-  def init(self):
-    pass
+    """Agente baseline: elige un movimiento válido al azar."""
 
-  def play(self, board:GameBoard):
-    return np.random.randint(0, 4)
+    def __init__(self):
+        pass
 
-  def heuristic_utility(self, board: GameBoard):
-    return 0
+    def play(self, board: GameBoard) -> int:
+        moves = self.safe_get_available_moves(board)
+        return int(np.random.choice(moves)) if moves else 0
+
+    def heuristic_utility(self, board: GameBoard) -> float:
+        return 0.0

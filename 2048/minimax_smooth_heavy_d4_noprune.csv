@@ -1,4 +1,0 @@
-episode,agent,depth,win,max_tile,moves,duration_sec,grid_sum
-1,minimax,4,False,512,445,606.5505,966.00
-2,minimax,4,False,1024,716,783.5368,1566.00
-3,minimax,4,False,512,490,662.4147,1090.00

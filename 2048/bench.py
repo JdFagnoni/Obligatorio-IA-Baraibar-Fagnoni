@@ -3,6 +3,8 @@ import csv
 import time
 from pathlib import Path
 
+import numpy as np
+
 from GameBoard import GameBoard
 from Expectimax_Agent import ExpectimaxAgent
 from Minimax_AlphaBeta_Agent import MinimaxAlphaBetaAgent
@@ -84,7 +86,11 @@ def main():
     parser.add_argument("--weights", type=str, default=None, help="Pesos custom: empty=320,monotonicity=2,corner=35,smoothness=2,merges=70 (prioridad sobre preset)")
     parser.add_argument("--output", type=str, default=None, help="Ruta CSV para guardar resultados por episodio")
     parser.add_argument("--no-pruning", action="store_true", help="Desactiva la poda alpha-beta en minimax para comparar")
+    parser.add_argument("--seed", type=int, default=None, help="Semilla para numpy (reproducibilidad)")
     args = parser.parse_args()
+
+    if args.seed is not None:
+        np.random.seed(args.seed)
 
     weights = parse_weights(args.weights) if args.weights else PRESET_WEIGHTS.get(args.preset)
 
