@@ -10,17 +10,6 @@ from GameBoard import GameBoard
 
 @contextlib.contextmanager
 def preserve_numpy_rng():
-    """Preserva el estado de np.random dentro de un bloque.
-
-    Justificación:
-    El template de GameBoard consume aleatoriedad (np.random) en operaciones que
-    los agentes llaman durante la búsqueda, principalmente clone() y
-    get_available_moves() (que clona internamente).
-
-    Si no preservamos el RNG, el "thinking" del agente puede adelantar la
-    secuencia aleatoria del juego y afectar qué tiles aparecen luego.
-    Este wrapper evita esa contaminación SIN tocar GameBoard.py.
-    """
 
     state = np.random.get_state()
     try:

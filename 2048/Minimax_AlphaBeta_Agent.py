@@ -6,12 +6,6 @@ from heuristics import evaluate
 
 
 class MinimaxAlphaBetaAgent(Agent):
-    """
-    Agente Minimax con poda Alpha-Beta para 2048.
-    Modela nodos MAX (jugador) y nodos MIN (colocacion de ficha adversarial).
-    En nodos MIN, selecciona la peor insercion posible (minimiza el valor esperado del MAX).
-    Si ``use_pruning`` es False, opera como minimax puro (sin podas) para comparar impacto de alpha-beta.
-    """
 
     def __init__(self, depth: int = 3, weights: dict | None = None, use_pruning: bool = True):
         self.depth = depth

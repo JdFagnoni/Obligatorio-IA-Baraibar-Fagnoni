@@ -6,20 +6,17 @@ from GameBoard import GameBoard
 
 
 def _as_grid(board_or_grid):
-    """Devuelve una vista numpy 4x4 a partir de GameBoard o ndarray."""
     if isinstance(board_or_grid, GameBoard):
         return board_or_grid.grid
     return np.asarray(board_or_grid)
 
 
 def count_empty(board_or_grid) -> int:
-    """Cantidad de celdas vacias (valor 0)."""
     grid = _as_grid(board_or_grid)
     return int(np.sum(grid == 0))
 
 
 def max_tile_in_corner(board_or_grid) -> int:
-    """Devuelve el valor de la ficha maxima si esta en una esquina; si no, 0."""
     grid = _as_grid(board_or_grid)
     max_tile = int(np.max(grid))
     corners = [grid[0, 0], grid[0, -1], grid[-1, 0], grid[-1, -1]]
@@ -27,10 +24,6 @@ def max_tile_in_corner(board_or_grid) -> int:
 
 
 def monotonicity(board_or_grid) -> float:
-    """
-    Mide cuan monotono es el tablero por filas y columnas.
-    Cuenta cuantas diferencias consecutivas mantienen la direccion (creciente o decreciente).
-    """
     grid = _as_grid(board_or_grid)
     log_grid = np.log2(grid, where=grid > 0, out=np.zeros_like(grid))
 
@@ -49,11 +42,6 @@ def monotonicity(board_or_grid) -> float:
 
 
 def smoothness(board_or_grid) -> float:
-    """
-    Penaliza diferencias grandes entre celdas adyacentes.
-    Se calcula sobre log2 para que las potencias de 2 sean lineales.
-    Devuelve un valor negativo (a mayor similitud, menos penalizacion).
-    """
     grid = _as_grid(board_or_grid)
     log_grid = np.log2(grid, where=grid > 0, out=np.zeros_like(grid))
     penalty = 0.0
@@ -67,9 +55,6 @@ def smoothness(board_or_grid) -> float:
 
 
 def merges_possible(board_or_grid) -> int:
-    """
-    Cuenta pares adyacentes iguales (potencial inmediato de merge).
-    """
     grid = _as_grid(board_or_grid)
     count = 0
     for i in range(4):
@@ -82,10 +67,6 @@ def merges_possible(board_or_grid) -> int:
 
 
 def positional_weight(board_or_grid) -> float:
-    """
-    Favorece una disposicion serpenteada que coloca las fichas grandes en una esquina.
-    Usa pesos decrecientes en forma de serpiente y pondera con log2 de las fichas.
-    """
     grid = _as_grid(board_or_grid)
     log_grid = np.log2(grid, where=grid > 0, out=np.zeros_like(grid))
     weights = np.array([
@@ -108,10 +89,6 @@ DEFAULT_WEIGHTS = {
 
 
 def evaluate(board_or_grid, weights: dict | None = None) -> float:
-    """
-    Combina varias heuristicas con pesos. Retorna un escalar a maximizar.
-    Pesos por defecto pensados para busqueda expectimax/minimax superficial.
-    """
     w = weights or DEFAULT_WEIGHTS
     components = {
         "empty": count_empty(board_or_grid),

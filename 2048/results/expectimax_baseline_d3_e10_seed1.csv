@@ -1,0 +1,11 @@
+episode,agent,depth,win,max_tile,moves,duration_sec,grid_sum
+1,expectimax,3,False,1024,712,116.5141,1564.00
+2,expectimax,3,False,512,495,98.3257,1076.00
+3,expectimax,3,False,512,481,91.1361,1078.00
+4,expectimax,3,False,1024,976,248.5850,2188.00
+5,expectimax,3,False,512,516,144.2962,1140.00
+6,expectimax,3,False,512,608,177.8292,1334.00
+7,expectimax,3,False,256,416,112.0138,920.00
+8,expectimax,3,False,1024,911,230.2973,1982.00
+9,expectimax,3,False,256,299,85.5947,654.00
+10,expectimax,3,False,512,524,143.6627,1142.00
