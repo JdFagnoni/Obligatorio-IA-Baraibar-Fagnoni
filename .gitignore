@@ -24,8 +24,6 @@ __pycache__/
 # ---------------------------
 # Modelos y datos pesados
 # ---------------------------
-*.pkl
-*.pickle
 *.h5
 *.pth
 
