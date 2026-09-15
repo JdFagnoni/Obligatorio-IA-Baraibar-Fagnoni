@@ -26,6 +26,29 @@ __pycache__/
 # ---------------------------
 *.h5
 *.pth
+*.pt
+*.ckpt
+*.onnx
+*.parquet
+*.feather
+
+# ---------------------------
+# Datasets crudos / archivos pesados genéricos
+# ---------------------------
+data/raw/
+datasets/
+*.zip
+*.tar.gz
+*.7z
+
+# ---------------------------
+# Credenciales / secretos
+# ---------------------------
+.env
+.env.*
+*.key
+*.pem
+credentials.json
 
 # ---------------------------
 # Logs y resultados temporales

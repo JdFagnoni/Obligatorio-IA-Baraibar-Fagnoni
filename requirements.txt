@@ -1,0 +1,17 @@
+# Consolidated dependencies for both modules (Cartpole/ and 2048/),
+# derived from the actual imports in cartpole_env.ipynb and 2048/*.py.
+# Python 3.10 (per Cartpole/pyproject.toml and 2048/pyproject.toml).
+
+# --- Cartpole (Q-Learning / Stochastic Q-Learning) ---
+gymnasium==1.2.0
+pygame==2.6.1
+pandas
+matplotlib
+seaborn
+ipykernel>=6.30.1
+
+# --- 2048 (Expectimax / Minimax game-tree search) ---
+numba==0.61.2
+
+# --- shared ---
+numpy==2.2.6
